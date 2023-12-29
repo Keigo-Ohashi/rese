@@ -21,3 +21,5 @@ src/Homestead.yaml
 src/Homestead.json
 src/.vagrant
 src/.phpunit.result.cache
+
+docker/mysql/data/laravel_db/

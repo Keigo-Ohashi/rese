@@ -22,4 +22,4 @@ src/Homestead.json
 src/.vagrant
 src/.phpunit.result.cache
 
-docker/
+docker/*

@@ -5,12 +5,14 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Database\Seeders\AreaSeeder;
 use Database\Seeders\GenreSeeder;
+use Database\Seeders\ShopSeeder;
 
 class DatabaseSeeder extends Seeder
 {
     private const SEEDERS = [
         AreaSeeder::class,
         GenreSeeder::class,
+        ShopSeeder::class,
     ];
 
     /**

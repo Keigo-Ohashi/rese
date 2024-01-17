@@ -48,7 +48,10 @@ services:
     entrypoint: >
       /bin/sh -c "
       /usr/bin/mc config host add myminio http://minio:9000 admin adminpass;
+      /usr/bin/mc rm -r --force myminio/rese;
       /usr/bin/mc mb myminio/rese;
+      usr/bin/mc policy set public myminio/rese;
+      exit 0;
       "
 
   phpmyadmin:

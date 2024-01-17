@@ -169,7 +169,7 @@ class ShopSeeder extends Seeder
 
         for ($i = 0; $i < count($shops); $i++) {
             $image = new UploadedFile('database/seeders/image/' . $i . '.jpg', $i . '.jpg');
-            $image_name = Storage::disk('s3')->put('image', $image);
+            $image_name = Storage::disk('s3')->put('image', $image, 'public');
             $shops[$i]['image'] = $image_name;
         }
 

@@ -25,7 +25,7 @@
         <td class="search-option">
           <select name="genre" id="">
             <option value="">All genre</option>
-            @foreach ($areas as $area)
+            @foreach ($genres as $genre)
               <option value="{{ $genre->id }}">{{ $genre->name }}</option>
             @endforeach
           </select>
@@ -38,4 +38,35 @@
     </table>
 
   </form>
+@endsection
+
+@section('main')
+  <div class="cards">
+    @foreach ($shops as $shop)
+      <div class="card">
+        <a href="/detail/{{ $shop->id }}">
+          <div class="shop-image"><img src="{{ $images[$shop->id] }}" alt=""></div>
+          <div class="card--description">
+            <h2 class="shop-name">{{ $shop->name }}</h2>
+            <h3 class="tag">#{{ $shop->area_name }} #{{ $shop->genre_name }}</h3>
+            <div class="card--footer">
+              <div class="detail">詳しく見る</div>
+              {{-- @if (Auth::check()) --}}
+              <form action="/change-like" method="post">
+                @csrf
+                <button class="icon" name="shopId" value="{{ $shop->id }}">
+                  @if ($shop->like_id != null)
+                    <img src="/image/like.png" alt="">
+                  @else
+                    <img src="/image/not-like.png" alt="">
+                  @endif
+                </button>
+              </form>
+              {{-- @endif --}}
+            </div>
+          </div>
+        </a>
+      </div>
+    @endforeach
+  </div>
 @endsection

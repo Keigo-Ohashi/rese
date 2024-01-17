@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Repositories\AreaRepository;
 use App\Repositories\GenreRepository;
 use App\Repositories\ShopRepository;
+use Illuminate\Support\Facades\Storage;
 
 class ShopService
 {
@@ -22,12 +23,17 @@ class ShopService
         $this->shopRepository = $shopRepository;
     }
 
-    public function getShopListInfo(): array
+    public function getShopListInfo(?int $userId): array
     {
-        $shops = $this->shopRepository->getAll();
+        $shops = $this->shopRepository->getAll($userId);
         $areas = $this->areaRepository->getAll();
         $genres = $this->genreRepository->getAll();
 
-        return [$shops, $areas, $genres];
+        $images = [];
+        foreach ($shops as $shop) {
+            $images[$shop->id] = Storage::disk('s3')->url($shop->image, now()->addMinute());
+        }
+
+        return [$shops, $areas, $genres, $images];
     }
 }

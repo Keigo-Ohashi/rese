@@ -6,8 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 use App\Services\ShopService;
-
-
+use Illuminate\Support\Facades\Auth;
 
 class ShopController extends Controller
 {
@@ -20,7 +19,12 @@ class ShopController extends Controller
 
     public function showShopList(): View
     {
-        [$shops, $areas, $genres] = $this->shopService->getShopListInfo();
-        return view('shop.list', compact('shops', 'areas', 'genres'));
+        if (Auth::check()) {
+            $userId = Auth::id();
+        } else {
+            $userId = null;
+        }
+        [$shops, $areas, $genres, $images] = $this->shopService->getShopListInfo($userId);
+        return view('shop.list', compact('shops', 'areas', 'genres', 'images'));
     }
 }

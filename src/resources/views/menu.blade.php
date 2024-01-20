@@ -22,7 +22,7 @@
       </li>
       @if (Auth::check())
         <li class="link">
-          <form action="logout">
+          <form action="logout" method="post">
             @csrf
             <button>Logout</button>
           </form>

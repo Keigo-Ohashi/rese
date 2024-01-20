@@ -13,12 +13,9 @@
 
 <body>
   <header>
-    <div class="header-left">
-      <a class="menu-button" href="/menu">
-        <img src="{{ asset('image/menuButton.png') }}" alt="メニューボタン">
-      </a>
 
-      <h1><a href="/">Rese</a></h1>
+    <div class="header-left">
+      @yield('header-left')
     </div>
 
     <div class="header-right">

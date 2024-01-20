@@ -15,3 +15,4 @@ use App\Http\Controllers\ShopController;
 */
 
 Route::get('/', [ShopController::class, 'showShopList']);
+Route::get('/menu', [ShopController::class, 'showMenu']);

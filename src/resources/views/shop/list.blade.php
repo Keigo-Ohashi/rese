@@ -8,6 +8,14 @@
   <title>飲食店一覧</title>
 @endsection
 
+@section('header-left')
+  <a class="menu-button" href="/menu">
+    <img src="{{ asset('image/menuButton.png') }}" alt="メニューボタン">
+  </a>
+
+  <h1><a href="/">Rese</a></h1>
+@endsection
+
 @section('header-right')
   <form action="/search" method="get">
 
@@ -61,6 +69,7 @@
                     <img src="/image/not-like.png" alt="">
                   @endif
                 </button>
+                <input type="hidden" name="referrer" value="{{ $referrer }}">
               </form>
               {{-- @endif --}}
             </div>

@@ -25,6 +25,12 @@ class ShopController extends Controller
             $userId = null;
         }
         [$shops, $areas, $genres, $images] = $this->shopService->getShopListInfo($userId);
-        return view('shop.list', compact('shops', 'areas', 'genres', 'images'));
+        $referrer = '/';
+        return view('shop.list', compact('shops', 'areas', 'genres', 'images', 'referrer'));
+    }
+
+    public function showMenu(): View
+    {
+        return view('menu');
     }
 }

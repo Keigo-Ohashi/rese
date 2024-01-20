@@ -13,6 +13,9 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
 
+use App\Http\Controllers\RegisterController;
+use Laravel\Fortify\Http\Controllers\RegisteredUserController;
+
 class FortifyServiceProvider extends ServiceProvider
 {
     /**
@@ -20,7 +23,10 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(
+            RegisteredUserController::class,
+            RegisterController::class
+        );
     }
 
     /**
@@ -29,7 +35,7 @@ class FortifyServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Fortify::createUsersUsing(CreateNewUser::class);
-        
+
         Fortify::registerView(function () {
             return view('auth.register');
         });

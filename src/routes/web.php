@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ShopController;
 
@@ -16,3 +17,4 @@ use App\Http\Controllers\ShopController;
 
 Route::get('/', [ShopController::class, 'showShopList']);
 Route::get('/menu', [ShopController::class, 'showMenu']);
+Route::get('/thanks', [RegisterController::class, 'showThanks']);

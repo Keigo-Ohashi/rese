@@ -59,19 +59,19 @@
             <h3 class="tag">#{{ $shop->area_name }} #{{ $shop->genre_name }}</h3>
             <div class="card--footer">
               <div class="detail">詳しく見る</div>
-              {{-- @if (Auth::check()) --}}
-              <form action="/change-like" method="post">
-                @csrf
-                <button class="icon" name="shopId" value="{{ $shop->id }}">
-                  @if ($shop->like_id != null)
-                    <img src="/image/like.png" alt="">
-                  @else
-                    <img src="/image/not-like.png" alt="">
-                  @endif
-                </button>
-                <input type="hidden" name="referrer" value="{{ $referrer }}">
-              </form>
-              {{-- @endif --}}
+              @if (Auth::check())
+                <form action="/change-like" method="post">
+                  @csrf
+                  <button class="icon" name="shopId" value="{{ $shop->id }}">
+                    @if ($shop->like_id != null)
+                      <img src="/image/like.png" alt="">
+                    @else
+                      <img src="/image/not-like.png" alt="">
+                    @endif
+                  </button>
+                  <input type="hidden" name="referrer" value="{{ $referrer }}">
+                </form>
+              @endif
             </div>
           </div>
         </a>

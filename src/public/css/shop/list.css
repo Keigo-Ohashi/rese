@@ -9,12 +9,40 @@
 
 .search-bar {
     width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.search-option,
+.search-name,
+.submit-button {
+    display: flex;
+    align-items: center;
+    height: 50px;
+}
+
+.search-option {
+    margin-right: 1rem;
+}
+
+.search-name {
+    flex: 1;
 }
 
 .search-option select,
-.search-name input {
-    padding: 15px;
+.search-name input,
+.submit-button button {
+    padding: 0 15px;
     border: none;
+}
+
+.search-name input {
+    width: 100%;
+    box-sizing: border-box;
+}
+.submit-button button {
+    cursor: pointer;
+    line-height: 0;
 }
 
 .search-option select:focus,

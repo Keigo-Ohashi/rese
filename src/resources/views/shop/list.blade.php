@@ -18,32 +18,34 @@
 
 @section('header-right')
   <form action="/search" method="get">
+    <div class="search-bar">
 
-    <table class="search-bar">
-      <tr>
-        <td class="search-option">
-          <select name="area" id="">
-            <option value="">All area</option>
-            @foreach ($areas as $area)
-              <option value="{{ $area->id }}">{{ $area->name }}</option>
-            @endforeach
-          </select>
-        </td>
+      <div class="search-option">
+        <select name="area" id="">
+          <option value="">All area</option>
+          @foreach ($areas as $area)
+            <option value="{{ $area->id }}">{{ $area->name }}</option>
+          @endforeach
+        </select>
+      </div>
 
-        <td class="search-option">
-          <select name="genre" id="">
-            <option value="">All genre</option>
-            @foreach ($genres as $genre)
-              <option value="{{ $genre->id }}">{{ $genre->name }}</option>
-            @endforeach
-          </select>
-        </td>
+      <div class="search-option">
+        <select name="genre" id="">
+          <option value="">All genre</option>
+          @foreach ($genres as $genre)
+            <option value="{{ $genre->id }}">{{ $genre->name }}</option>
+          @endforeach
+        </select>
+      </div>
 
-        <td class="search-name">
-          <input type="text" name="shop" placeholder="Search ...">
-        </td>
-      </tr>
-    </table>
+      <div class="search-name">
+        <input type="text" name="shop" placeholder="Search ...">
+      </div>
+
+      <div class="submit-button">
+        <button><img src="{{ asset('image/search.png') }}" alt=""></button>
+      </div>
+    </div>
 
   </form>
 @endsection

@@ -21,25 +21,28 @@
     <div class="search-bar">
 
       <div class="search-option">
-        <select name="area" id="">
+        <select name="areaId">
           <option value="">All area</option>
           @foreach ($areas as $area)
-            <option value="{{ $area->id }}">{{ $area->name }}</option>
+            <option value="{{ $area->id }}" @if (isset($areaId) and $areaId == $area->id) selected @endif>{{ $area->name }}
+            </option>
           @endforeach
         </select>
       </div>
 
       <div class="search-option">
-        <select name="genre" id="">
+        <select name="genreId" id="">
           <option value="">All genre</option>
           @foreach ($genres as $genre)
-            <option value="{{ $genre->id }}">{{ $genre->name }}</option>
+            <option value="{{ $genre->id }}" @if (isset($genreId) and $genreId == $area->id) selected @endif>{{ $genre->name }}
+            </option>
           @endforeach
         </select>
       </div>
 
       <div class="search-name">
-        <input type="text" name="shop" placeholder="Search ...">
+        <input type="text" name="shopName" placeholder="Search ..."
+          @if (isset($shopName)) value="{{ $shopName }}" @endif>
       </div>
 
       <div class="submit-button">

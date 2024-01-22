@@ -17,4 +17,5 @@ use App\Http\Controllers\ShopController;
 
 Route::get('/', [ShopController::class, 'showShopList']);
 Route::get('/menu', [ShopController::class, 'showMenu']);
+Route::get('/search', [ShopController::class, 'search']);
 Route::get('/thanks', [RegisterController::class, 'showThanks']);

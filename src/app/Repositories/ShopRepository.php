@@ -9,19 +9,24 @@ use App\Models\Shop;
 
 class ShopRepository
 {
-    public function getAll(?int $userId): Collection
+    public function getAll(?string $areaId, ?string $genreId, ?string $shopName, ?int $userId): Collection
     {
-        // if (is_null($userId)) {
-        //     return Shop::join('areas', 'shops.area_id', '=', 'areas.id')
-        //         ->join('genres', 'shops.genre_id', "=", "genres.id")
-        //         ->select('shops.*', 'areas.name as area_name', 'genres.name as genre_name')
-        //         ->orderBy('shops.id')
-        //         ->get();
-        // }
+        // $likes = Like::where('user_id', '=', $userId);
+        if (is_null($shopName)) {
+            $shops = Shop::where('shops.name', 'like', '%');
+        } else {
+            $shops = Shop::where('shops.name', 'like', '%' . $shopName . '%');
+        }
+        if (!empty($areaId)) {
+            $shops = $shops->where('area_id', '=', $areaId);
+        }
+        if (!empty($genreId)) {
+            $shops = $shops->where('genre_id', '=', $genreId);
+        }
 
-        $likes = Like::where('user_id', '=', $userId);
-        return Shop::join('areas', 'shops.area_id', '=', 'areas.id')
-            ->join('genres', 'shops.genre_id', "=", "genres.id")
+
+        return $shops->join('areas', 'shops.area_id', '=', 'areas.id')
+            ->join('genres', 'shops.genre_id', '=', 'genres.id')
             ->leftJoin('likes', function ($join) use ($userId) {
                 $join->on('shops.id', '=', 'likes.shop_id')->where('likes.user_id', '=', $userId);
             })

@@ -23,11 +23,11 @@ class ShopService
         $this->shopRepository = $shopRepository;
     }
 
-    public function getShopListInfo(?int $userId): array
+    public function getShopListInfo(?string $areaId, ?string $genreId, ?string $shopName, ?int $userId): array
     {
-        $shops = $this->shopRepository->getAll($userId);
-        $areas = $this->areaRepository->getAll();
-        $genres = $this->genreRepository->getAll();
+        $shops = $this->shopRepository->getAll($areaId, $genreId, $shopName, $userId);
+        $areas = $this->areaRepository->searchOption();
+        $genres = $this->genreRepository->searchOption();
 
         $images = [];
         foreach ($shops as $shop) {

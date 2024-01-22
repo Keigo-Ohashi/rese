@@ -24,7 +24,7 @@ class ShopController extends Controller
         } else {
             $userId = null;
         }
-        [$shops, $areas, $genres, $images] = $this->shopService->getShopListInfo($userId);
+        [$shops, $areas, $genres, $images] = $this->shopService->getShopListInfo("", "", "", $userId);
         $referrer = '/';
         return view('shop.list', compact('shops', 'areas', 'genres', 'images', 'referrer'));
     }
@@ -32,5 +32,21 @@ class ShopController extends Controller
     public function showMenu(): View
     {
         return view('menu');
+    }
+
+    public function search(Request $request): View
+    {
+        if (Auth::check()) {
+            $userId = Auth::id();
+        } else {
+            $userId = null;
+        }
+        $areaId = $request->areaId;
+        $genreId = $request->genreId;
+        $shopName = $request->shopName;
+
+        [$shops, $areas, $genres, $images] = $this->shopService->getShopListInfo($areaId, $genreId, $shopName, $userId);
+        $referrer = '/search';
+        return view('shop.list', compact('shops', 'areas', 'genres', 'images', 'referrer', 'areaId', 'genreId', 'shopName'));
     }
 }

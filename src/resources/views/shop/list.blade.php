@@ -34,7 +34,7 @@
         <select name="genreId" id="">
           <option value="">All genre</option>
           @foreach ($genres as $genre)
-            <option value="{{ $genre->id }}" @if (isset($genreId) and $genreId == $area->id) selected @endif>{{ $genre->name }}
+            <option value="{{ $genre->id }}" @if (isset($genreId) and $genreId == $genre->id) selected @endif>{{ $genre->name }}
             </option>
           @endforeach
         </select>

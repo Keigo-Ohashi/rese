@@ -46,7 +46,7 @@ class ShopController extends Controller
         $shopName = $request->shopName;
 
         [$shops, $areas, $genres, $images] = $this->shopService->getShopListInfo($areaId, $genreId, $shopName, $userId);
-        $referrer = '/search';
+        $referrer = '/search?areaId=' . $areaId . '&genreId=' . $genreId . '&shopName=' . $shopName;
         return view('shop.list', compact('shops', 'areas', 'genres', 'images', 'referrer', 'areaId', 'genreId', 'shopName'));
     }
 }

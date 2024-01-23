@@ -65,15 +65,17 @@
             <div class="card--footer">
               <div class="detail">詳しく見る</div>
               @if (Auth::check())
-                <form action="/change-like" method="post">
+                <form method="post">
                   @csrf
-                  <button class="icon" name="shopId" value="{{ $shop->id }}">
-                    @if ($shop->like_id != null)
-                      <img src="/image/like.png" alt="">
-                    @else
+                  @if (is_null($shop->like_id))
+                    <button formaction="/like" class="icon" name="shopId" value="{{ $shop->id }}">
                       <img src="/image/not-like.png" alt="">
-                    @endif
-                  </button>
+                    </button>
+                  @else
+                    <button formaction="/unlike" class="icon" name="shopId" value="{{ $shop->id }}">
+                      <img src="/image/like.png" alt="">
+                    </button>
+                  @endif
                   <input type="hidden" name="referrer" value="{{ $referrer }}">
                 </form>
               @endif

@@ -8,6 +8,7 @@ use App\Services\ShopService;
 
 use App\Repositories\AreaRepository;
 use App\Repositories\GenreRepository;
+use App\Repositories\LikeRepository;
 use App\Repositories\ShopRepository;
 
 class AppServiceProvider extends ServiceProvider
@@ -29,6 +30,9 @@ class AppServiceProvider extends ServiceProvider
 
         // wired(GenreRepository)
         $this->app->singleton(GenreRepository::class, GenreRepository::class);
+
+        // wired(LikeRepository)
+        $this->app->singleton(LikeRepository::class, LikeRepository::class);
 
         // wired(ShopRepository)
         $this->app->singleton(ShopRepository::class, ShopRepository::class);

@@ -19,3 +19,7 @@ Route::get('/', [ShopController::class, 'showShopList']);
 Route::get('/menu', [ShopController::class, 'showMenu']);
 Route::get('/search', [ShopController::class, 'search']);
 Route::get('/thanks', [RegisterController::class, 'showThanks']);
+Route::middleware('auth')->group(function () {
+    Route::post('/like', [ShopController::class, 'like']);
+    Route::post('/unlike', [ShopController::class, 'unlike']);
+});

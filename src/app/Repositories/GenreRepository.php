@@ -15,6 +15,6 @@ class GenreRepository
 
     public function searchOption(): Collection
     {
-        return Genre::join('shops', 'genres.id', '=', 'shops.genre_id')->groupBy('genres.id')->select('genres.*')->get();
+        return Genre::join('shops', 'genres.id', 'shops.genre_id')->groupBy('genres.id')->select('genres.*')->get();
     }
 }

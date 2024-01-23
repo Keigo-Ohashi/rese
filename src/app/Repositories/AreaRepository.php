@@ -15,6 +15,6 @@ class AreaRepository
 
     public function searchOption(): Collection
     {
-        return Area::join('shops', 'areas.id', '=', 'shops.area_id')->groupBy('areas.id')->select('areas.*')->get();
+        return Area::join('shops', 'areas.id', 'shops.area_id')->groupBy('areas.id')->select('areas.*')->get();
     }
 }

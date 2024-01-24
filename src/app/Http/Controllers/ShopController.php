@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -45,10 +46,12 @@ class ShopController extends Controller
         $areaId = $request->areaId;
         $genreId = $request->genreId;
         $shopName = $request->shopName;
+        $referrer = '/search?areaId=' . $areaId . '&genreId=' . $genreId . '&shopName=' . $shopName;
+
+        $request->session()->put(compact('areaId', 'genreId', 'shopName'));
 
         [$shops, $areas, $genres, $images] = $this->shopService->getShopListInfo($areaId, $genreId, $shopName, $userId);
-        $referrer = '/search?areaId=' . $areaId . '&genreId=' . $genreId . '&shopName=' . $shopName;
-        return view('shop.list', compact('shops', 'areas', 'genres', 'images', 'referrer', 'areaId', 'genreId', 'shopName'));
+        return view('shop.list', compact('shops', 'areas', 'genres', 'images', 'referrer'));
     }
 
     public function like(Request $request): RedirectResponse
@@ -65,5 +68,11 @@ class ShopController extends Controller
         $shopId = $request->shopId;
         $this->shopService->unlikeShop($userId, $shopId);
         return redirect($request->referrer);
+    }
+
+    public function detail($shopId): View
+    {
+
+        return view('shop.detail');
     }
 }

@@ -24,7 +24,7 @@
         <select name="areaId">
           <option value="">All area</option>
           @foreach ($areas as $area)
-            <option value="{{ $area->id }}" @if (isset($areaId) and $areaId == $area->id) selected @endif>{{ $area->name }}
+            <option value="{{ $area->id }}" @if (session('areaId') == $area->id) selected @endif>{{ $area->name }}
             </option>
           @endforeach
         </select>
@@ -34,15 +34,14 @@
         <select name="genreId" id="">
           <option value="">All genre</option>
           @foreach ($genres as $genre)
-            <option value="{{ $genre->id }}" @if (isset($genreId) and $genreId == $genre->id) selected @endif>{{ $genre->name }}
+            <option value="{{ $genre->id }}" @if (session('genreId') == $genre->id) selected @endif>{{ $genre->name }}
             </option>
           @endforeach
         </select>
       </div>
 
       <div class="search-name">
-        <input type="text" name="shopName" placeholder="Search ..."
-          @if (isset($shopName)) value="{{ $shopName }}" @endif>
+        <input type="text" name="shopName" placeholder="Search ..." value="{{ session('shopName') }}">
       </div>
 
       <div class="submit-button">

@@ -1,5 +1,5 @@
 body {
-    padding: 50px;
+    padding: 50px 100px;
     caret-color: transparent;
 }
 
@@ -37,4 +37,14 @@ header {
 h1 a {
     font-size: 30px;
     color: #3560f6;
+}
+
+select:focus,
+input:focus {
+    outline: none;
+    caret-color: #000;
+}
+
+button {
+    cursor: pointer;
 }

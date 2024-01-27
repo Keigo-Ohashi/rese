@@ -10,7 +10,7 @@
 
 @section('header-left')
   <a class="menu-button" href="/">
-    <img src="{{ asset('image/menuExitButton.png') }}" alt="メニューボタン">
+    <img src="{{ asset('image/common/menuExitButton.png') }}" alt="メニューボタン">
   </a>
 @endsection
 

@@ -55,23 +55,63 @@
       <h3 class="reserve-title">
         予約
       </h3>
-      <div class="reserve-input">
-        日付 ：@if (is_null(old('date')))
-          <input type="date" name="date" value="{{ date('Y-m-d') }}">
-        @else
-          <input type="date" name="date" value="{{ old('date') }}">
+
+      <table>
+        @if ($errors->has('date'))
+          <tr>
+            <td></td>
+            <td class="error">
+              <div>{{ $errors->first('date') }}</div>
+            </td>
+          </tr>
         @endif
-      </div>
-      <div class="reserve-input">
-        時間 ： <input type="time" name="time" value="{{ old('time') }}">
-      </div>
-      <div class="reserve-input">
-        人数 ： <input type="number" name="numPeople" value="{{ old('numPeople') }}">
-      </div>
+        <tr>
+          <td class="item-name">日付：</td>
+          <td class="item-input">
+            @if (is_null(old('date')))
+              <input type="date" name="date" value="{{ date('Y-m-d') }}">
+            @else
+              <input type="date" name="date" value="{{ old('date') }}">
+            @endif
+          </td>
+        </tr>
+        @if ($errors->has('time'))
+          <tr>
+            <td></td>
+            <td class="error">
+              <div>{{ $errors->first('time') }}</div>
+            </td>
+          </tr>
+        @endif
+        <tr>
+          <td class="item-name">時間：</td>
+          <td class="item-input">
+            <input type="time" name="time" value="{{ old('time') }}">
+          </td>
+        </tr>
+        @if ($errors->has('numPeople'))
+          <tr>
+            <td></td>
+            <td class="error">
+              <div>{{ $errors->first('numPeople') }}</div>
+            </td>
+          </tr>
+        @endif
+        <tr>
+          <td class="item-name">人数：</td>
+          <td class="item-input">
+            @if (is_null(old('numPeople')))
+              <input type="number" name="numPeople" value="1">
+            @else
+              <input type="number" name="numPeople" value="{{ old('numPeople') }}">
+            @endif
+          </td>
+        </tr>
+      </table>
+      <input type="hidden" name="shopId" value="{{ $shop->id }}">
     </div>
     <div class="submit-button">
       <button>予約する</button>
     </div>
   </form>
-
 @endsection

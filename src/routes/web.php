@@ -23,4 +23,6 @@ Route::get('/thanks', [RegisterController::class, 'showThanks']);
 Route::middleware('auth')->group(function () {
     Route::post('/like', [ShopController::class, 'like']);
     Route::post('/unlike', [ShopController::class, 'unlike']);
+    Route::post('/reserve', [ShopController::class, 'reserve']);
+    Route::get('/done', [ShopController::class, 'reserveComplete']);
 });

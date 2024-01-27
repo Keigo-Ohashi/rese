@@ -6,25 +6,29 @@ use App\Repositories\AreaRepository;
 use App\Repositories\GenreRepository;
 use App\Repositories\LikeRepository;
 use App\Repositories\ShopRepository;
+use App\Repositories\ReserveRepository;
 use Illuminate\Support\Facades\Storage;
 
 class ShopService
 {
-    private $shopRepository;
     private $areaRepository;
-    private $likeRepository;
     private $genreRepository;
+    private $likeRepository;
+    private $shopRepository;
+    private $reserveRepository;
 
     public function __construct(
         AreaRepository $areaRepository,
         GenreRepository $genreRepository,
         LikeRepository $likeRepository,
-        ShopRepository $shopRepository
+        ShopRepository $shopRepository,
+        ReserveRepository $reserveRepository,
     ) {
         $this->areaRepository = $areaRepository;
         $this->genreRepository = $genreRepository;
         $this->likeRepository = $likeRepository;
         $this->shopRepository = $shopRepository;
+        $this->reserveRepository = $reserveRepository;
     }
 
     public function getShopListInfo(?string $areaId, ?string $genreId, ?string $shopName, ?int $userId): array
@@ -68,5 +72,10 @@ class ShopService
             return true;
         }
         return false;
+    }
+
+    public function reserve(int $userId, string $shopId, string $date, string $time, string $numPeople): void
+    {
+        $this->reserveRepository->register($userId, $shopId, $date . ' ' . $time, $numPeople);
     }
 }

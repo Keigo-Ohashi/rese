@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 use App\Services\ShopService;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\RegisterReservationRequest;
 
 class ShopController extends Controller
 {
@@ -71,7 +71,7 @@ class ShopController extends Controller
         return redirect($request->referrer);
     }
 
-    public function detail($shopId): View
+    public function detail(string $shopId): View
     {
 
         $areaId = session('areaId');
@@ -89,5 +89,21 @@ class ShopController extends Controller
         }
         $referrer = '/detail/' . $shopId;
         return view('shop.detail', compact('shop', 'image', 'back', 'referrer'));
+    }
+
+    public function reserve(RegisterReservationRequest $request): RedirectResponse
+    {
+        $userId = Auth::id();
+        $shopId = $request->shopId;
+        $date = $request->date;
+        $time = $request->time;
+        $numPeople = $request->numPeople;
+        $this->shopService->reserve($userId, $shopId, $date, $time, $numPeople);
+        return redirect('done');
+    }
+
+    public function reserveComplete(): View
+    {
+        return view('shop.reserved');
     }
 }

@@ -41,6 +41,17 @@ class ShopService
         return [$shops, $areas, $genres, $images];
     }
 
+    public function getShopInfo(string $shopId, ?int $userId): array
+    {
+        $shop = $this->shopRepository->find($shopId, $userId);
+        if (is_null($shop)) {
+            return [null, null];
+        }
+
+        $image = Storage::disk('s3')->url($shop->image, now()->addMinute());
+        return [$shop, $image];
+    }
+
     public function likeShop(int $userId, int $shopId): bool
     {
         if ($this->likeRepository->count($userId, $shopId) == 0) {

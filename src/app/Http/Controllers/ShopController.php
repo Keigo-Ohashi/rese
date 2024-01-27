@@ -19,8 +19,9 @@ class ShopController extends Controller
         $this->shopService = $shopService;
     }
 
-    public function showShopList(): View
+    public function showShopList(Request $request): View
     {
+        session()->forget(['areaId', 'genreId', 'shopName']);
         if (Auth::check()) {
             $userId = Auth::id();
         } else {
@@ -48,7 +49,7 @@ class ShopController extends Controller
         $shopName = $request->shopName;
         $referrer = '/search?areaId=' . $areaId . '&genreId=' . $genreId . '&shopName=' . $shopName;
 
-        $request->session()->put(compact('areaId', 'genreId', 'shopName'));
+        session()->put(compact('areaId', 'genreId', 'shopName'));
 
         [$shops, $areas, $genres, $images] = $this->shopService->getShopListInfo($areaId, $genreId, $shopName, $userId);
         return view('shop.list', compact('shops', 'areas', 'genres', 'images', 'referrer'));
@@ -73,6 +74,20 @@ class ShopController extends Controller
     public function detail($shopId): View
     {
 
-        return view('shop.detail');
+        $areaId = session('areaId');
+        $genreId = session('genreId');
+        $shopName = session('shopName');
+        if (!is_null($areaId) or !is_null($genreId) or !is_null($shopName)) {
+            $back = '/search?areaId=' . $areaId . '&genreId=' . $genreId . '&shopName=' . $shopName;
+        } else {
+            $back = '/';
+        }
+        $userId = Auth::id();
+        [$shop, $image] = $this->shopService->getShopInfo($shopId, $userId);
+        if (is_null($shop)) {
+            return view('shop.notFound', compact('back'));
+        }
+        $referrer = '/detail/' . $shopId;
+        return view('shop.detail', compact('shop', 'image', 'back', 'referrer'));
     }
 }

@@ -112,4 +112,12 @@ class ShopController extends Controller
         $referrer = '/my-page';
         return view('auth.myPage', compact('shops', 'images', 'reservations', 'referrer'));
     }
+
+    public function deleteReservation(Request $request): RedirectResponse
+    {
+        $userId = Auth::id();
+        $reservationId = $request->reservationId;
+        $this->shopService->deleteReservation($userId, $reservationId);
+        return redirect('my-page');
+    }
 }

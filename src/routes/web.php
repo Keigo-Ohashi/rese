@@ -26,4 +26,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/reserve', [ShopController::class, 'reserve']);
     Route::get('/done', [ShopController::class, 'reserveComplete']);
     Route::get('/my-page', [ShopController::class, 'myPage']);
+    Route::post('/delete-reservation', [ShopController::class, 'deleteReservation']);
 });

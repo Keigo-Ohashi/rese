@@ -90,4 +90,13 @@ class ShopService
 
         return [$shops, $images, $reservations];
     }
+
+    public function deleteReservation(int $userId, string $reservationId): bool
+    {
+        if ($this->reservationRepository->count($userId, $reservationId) != 1) {
+            return false;
+        }
+        $this->reservationRepository->delete($reservationId);
+        return True;
+    }
 }

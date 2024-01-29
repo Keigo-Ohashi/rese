@@ -20,14 +20,19 @@
   <div class="my-page-content">
     <div class="reservations">
       <h2>予約状況</h2>
+      @if ($reservations->count() == 0)
+        <p>予約情報がありません</p>
+      @endif
       @foreach ($reservations as $reservation)
-        <form action="" class="reservation">
+        <form action="delete-reservation" method="post" class="reservation">
+          @csrf
           <div class="reservation-head">
             <div class="reservation-img">
               <img src="/image/myPage/clock.png" alt="">
             </div>
             <div class="delete-button">
-              <button> <img src="/image/myPage/delete.png" alt=""> </button>
+              <button name="reservationId" value="{{ $reservation->id }}"> <img src="/image/myPage/delete.png"
+                  alt=""> </button>
             </div>
           </div>
           <table class="reservation-content">
@@ -56,6 +61,9 @@
     <div class="like-shops">
       <h2>お気に入り店舗</h2>
       <div class="cards">
+        @if ($shops->count() == 0)
+          <p>お気に入り店舗がありません</p>
+        @endif
         @foreach ($shops as $shop)
           @include('parts.shopCard', compact('shop'))
         @endforeach

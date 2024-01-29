@@ -27,4 +27,14 @@ class ReservationRepository
             ->select('reservations.*', 'shops.name as shop_name')
             ->get();
     }
+
+    public function count(int $userId, string $reservationId): int
+    {
+        return Reservation::where('user_id', $userId)->where('id', $reservationId)->count();
+    }
+
+    public function delete(string $reservationId): void
+    {
+        Reservation::where('id', $reservationId)->delete();
+    }
 }

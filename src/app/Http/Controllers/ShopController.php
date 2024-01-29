@@ -21,6 +21,7 @@ class ShopController extends Controller
 
     public function showShopList(Request $request): View
     {
+        session()->put('back', '/');
         session()->forget(['areaId', 'genreId', 'shopName']);
         if (Auth::check()) {
             $userId = Auth::id();
@@ -47,8 +48,8 @@ class ShopController extends Controller
         $areaId = $request->areaId;
         $genreId = $request->genreId;
         $shopName = $request->shopName;
+        session()->put('back', '/search?areaId=' . $areaId . '&genreId=' . $genreId . '&shopName=' . $shopName);
         $referrer = '/search?areaId=' . $areaId . '&genreId=' . $genreId . '&shopName=' . $shopName;
-
         session()->put(compact('areaId', 'genreId', 'shopName'));
 
         [$shops, $areas, $genres, $images] = $this->shopService->getShopListInfo($areaId, $genreId, $shopName, $userId);
@@ -77,18 +78,14 @@ class ShopController extends Controller
         $areaId = session('areaId');
         $genreId = session('genreId');
         $shopName = session('shopName');
-        if (!is_null($areaId) or !is_null($genreId) or !is_null($shopName)) {
-            $back = '/search?areaId=' . $areaId . '&genreId=' . $genreId . '&shopName=' . $shopName;
-        } else {
-            $back = '/';
-        }
+
         $userId = Auth::id();
         [$shop, $image] = $this->shopService->getShopInfo($shopId, $userId);
         if (is_null($shop)) {
-            return view('shop.notFound', compact('back'));
+            return view('shop.notFound');
         }
         $referrer = '/detail/' . $shopId;
-        return view('shop.detail', compact('shop', 'image', 'back', 'referrer'));
+        return view('shop.detail', compact('shop', 'image',  'referrer'));
     }
 
     public function reserve(RegisterReservationRequest $request): RedirectResponse
@@ -105,5 +102,14 @@ class ShopController extends Controller
     public function reserveComplete(): View
     {
         return view('shop.reserved');
+    }
+
+    public function myPage(): View
+    {
+        $userId = Auth::id();
+        [$shops, $images, $reservations] = $this->shopService->getMyPageInfo($userId);
+        session()->put('back', '/my-page');
+        $referrer = '/my-page';
+        return view('auth.myPage', compact('shops', 'images', 'reservations', 'referrer'));
     }
 }

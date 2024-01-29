@@ -6,7 +6,7 @@ use App\Repositories\AreaRepository;
 use App\Repositories\GenreRepository;
 use App\Repositories\LikeRepository;
 use App\Repositories\ShopRepository;
-use App\Repositories\ReserveRepository;
+use App\Repositories\ReservationRepository;
 use Illuminate\Support\Facades\Storage;
 
 class ShopService
@@ -15,20 +15,20 @@ class ShopService
     private $genreRepository;
     private $likeRepository;
     private $shopRepository;
-    private $reserveRepository;
+    private $reservationRepository;
 
     public function __construct(
         AreaRepository $areaRepository,
         GenreRepository $genreRepository,
         LikeRepository $likeRepository,
         ShopRepository $shopRepository,
-        ReserveRepository $reserveRepository,
+        ReservationRepository $reservationRepository,
     ) {
         $this->areaRepository = $areaRepository;
         $this->genreRepository = $genreRepository;
         $this->likeRepository = $likeRepository;
         $this->shopRepository = $shopRepository;
-        $this->reserveRepository = $reserveRepository;
+        $this->reservationRepository = $reservationRepository;
     }
 
     public function getShopListInfo(?string $areaId, ?string $genreId, ?string $shopName, ?int $userId): array
@@ -76,6 +76,18 @@ class ShopService
 
     public function reserve(int $userId, string $shopId, string $date, string $time, string $numPeople): void
     {
-        $this->reserveRepository->register($userId, $shopId, $date . ' ' . $time, $numPeople);
+        $this->reservationRepository->register($userId, $shopId, $date . ' ' . $time, $numPeople);
+    }
+
+    public function getMyPageInfo(int $userId): array
+    {
+        $shops = $this->shopRepository->getLikeShop($userId);
+        $images = [];
+        foreach ($shops as $shop) {
+            $images[$shop->id] = Storage::disk('s3')->url($shop->image, now()->addMinute());
+        }
+        $reservations = $this->reservationRepository->getReservationList($userId);
+
+        return [$shops, $images, $reservations];
     }
 }

@@ -28,7 +28,7 @@
           </form>
         </li>
         <li class="link">
-          <a href="/mypage">Mypage</a>
+          <a href="/my-page">Mypage</a>
         </li>
       @else
         <li class="link">

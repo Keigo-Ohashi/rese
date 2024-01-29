@@ -47,4 +47,5 @@ input:focus {
 
 button {
     cursor: pointer;
+    padding: 0;
 }

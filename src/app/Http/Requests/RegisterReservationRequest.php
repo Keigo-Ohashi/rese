@@ -35,10 +35,12 @@ class RegisterReservationRequest extends FormRequest
     protected function withValidator($validator): void
     {
         $validator->after(function ($validator) {
-            $dateTime = DateTime::createFromFormat('Y-m-d H:i', $this->input('date') . ' ' . $this->input('time'));
-            if ($dateTime < new DateTime('now')) {
-                $validator->errors()->add('date', '予約日時は現在よりも未来の日時を指定してください');
-                $validator->errors()->add('time', '予約日時は現在よりも未来の日時を指定してください');
+            $errors = $validator->errors();
+            if (!$errors->has('date') and !$errors->has('time')) {
+                $dateTime = DateTime::createFromFormat('Y-m-d H:i', $this->input('date') . ' ' . $this->input('time'));
+                if ($dateTime < new DateTime('now')) {
+                    $validator->errors()->add('date', '予約日時は現在よりも未来の日時を指定してください');
+                }
             }
         });
     }

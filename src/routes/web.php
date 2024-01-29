@@ -25,4 +25,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/unlike', [ShopController::class, 'unlike']);
     Route::post('/reserve', [ShopController::class, 'reserve']);
     Route::get('/done', [ShopController::class, 'reserveComplete']);
+    Route::get('/my-page', [ShopController::class, 'myPage']);
 });

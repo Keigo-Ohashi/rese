@@ -9,11 +9,7 @@
 @endsection
 
 @section('header-left')
-  <a class="menu-button" href="/menu">
-    <img src="{{ asset('image/common/menuButton.png') }}" alt="メニューボタン">
-  </a>
-
-  <h1><a href="/">Rese</a></h1>
+  @include('parts.menuButton')
 @endsection
 
 
@@ -22,7 +18,7 @@
   <div class="shop-info">
     <div class="shop-title">
       <div class="back-link">
-        <a href="{{ $back }}"><img src="{{ asset('image/shop/back_link.png') }}" alt=""></a>
+        <a href="{{ session('back') }}"><img src="{{ asset('image/shop/back_link.png') }}" alt=""></a>
       </div>
       <h2 class="shop-name">{{ $shop->name }}</h2>
       @if (Auth::check())

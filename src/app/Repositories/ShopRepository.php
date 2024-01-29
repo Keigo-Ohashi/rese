@@ -45,4 +45,16 @@ class ShopRepository
             ->select('shops.*', 'areas.name as area_name', 'genres.name as genre_name', 'likes.id as like_id')
             ->first();
     }
+
+    public function getLikeShop(int $userId): Collection
+    {
+        return Shop::join('areas', 'shops.area_id',  'areas.id')
+            ->join('genres', 'shops.genre_id',  'genres.id')
+            ->join('likes', function ($join) use ($userId) {
+                $join->on('shops.id',  'likes.shop_id')->where('likes.user_id',  $userId);
+            })
+            ->select('shops.*', 'areas.name as area_name', 'genres.name as genre_name', 'likes.id as like_id')
+            ->orderBy('shops.id')
+            ->get();
+    }
 }

@@ -1,0 +1,85 @@
+.user-name {
+    width: fit-content;
+    margin: 0 auto 4rem auto;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.my-page-content {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.reservations {
+    width: calc((100% - 80px) / 3);
+}
+
+.reservation {
+    background-color: #3560f6;
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    box-shadow: 2px 2px 10px #999;
+    overflow: hidden;
+}
+
+.reservation-head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.reservation-head img {
+    width: 30px;
+}
+
+.delete-button {
+    line-height: 0;
+}
+
+.delete-button button {
+    line-height: 0;
+    border: none;
+}
+
+.reservation-content {
+    width: 100%;
+}
+
+.reservation-content td {
+    padding: 1rem 0;
+    color: #fff;
+    font-weight: bold;
+}
+
+.like-shops {
+    width: calc((100% - 80px) / 3 * 2 + 40px);
+}
+
+.cards {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: calc((100% - 40px) / 2);
+}
+
+@media all and (max-width: 1340px) {
+    .like-shops,
+    .reservations {
+        width: calc((100% - 40px) / 2);
+    }
+
+    .cards,
+    .card {
+        width: 100%;
+    }
+}

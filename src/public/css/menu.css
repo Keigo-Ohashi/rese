@@ -1,0 +1,16 @@
+.link-list {
+    margin-top: 100px;
+}
+
+.link {
+    text-align: center;
+}
+
+.link a,
+.link button {
+    color: #3560f6;
+    font-weight: bold;
+    line-height: 2;
+    font-size: 2rem;
+    border: none;
+}

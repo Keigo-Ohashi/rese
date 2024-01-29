@@ -99,4 +99,20 @@ class ShopService
         $this->reservationRepository->delete($reservationId);
         return True;
     }
+
+    public function getModifyReservationInfo(int $userId, string $reservationId): array
+    {
+        $reservation = $this->reservationRepository->find($reservationId);
+        if (is_null($reservation)) {
+            return [null, null, null];
+        }
+
+        $shop = $this->shopRepository->find($reservation->shop_id, $userId);
+        if (is_null($shop)) {
+            return [null, null, null];
+        }
+
+        $image = Storage::disk('s3')->url($shop->image, now()->addMinute());
+        return [$reservation, $shop, $image];
+    }
 }

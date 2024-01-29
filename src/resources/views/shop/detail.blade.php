@@ -44,12 +44,17 @@
     </div>
   </div>
 
+  <form @if (isset($reservation)) action="/modify-reservation" @else  action="/reserve" @endif method="post"
+    class="reserve-form">
 
-  <form action="/reserve" method="post" class="reserve-form">
     <div class="reserve-inputs">
       @csrf
       <h3 class="reserve-title">
-        予約
+        @if (isset($reservation))
+          予約修正
+        @else
+          新規予約
+        @endif
       </h3>
 
       <table>
@@ -65,7 +70,11 @@
           <td class="item-name">日付：</td>
           <td class="item-input">
             @if (is_null(old('date')))
-              <input type="date" name="date" value="{{ date('Y-m-d') }}">
+              @if (isset($reservation))
+                <input type="date" name="date" value="{{ $reservation->date }}">
+              @else
+                <input type="date" name="date" value="{{ date('Y-m-d') }}">
+              @endif
             @else
               <input type="date" name="date" value="{{ old('date') }}">
             @endif
@@ -82,7 +91,11 @@
         <tr>
           <td class="item-name">時間：</td>
           <td class="item-input">
-            <input type="time" name="time" value="{{ old('time') }}">
+            @if (isset($reservation))
+              <input type="time" name="time" value="{{ $reservation->time }}">
+            @else
+              <input type="time" name="time" value="{{ old('time') }}">
+            @endif
           </td>
         </tr>
         @if ($errors->has('numPeople'))
@@ -97,17 +110,31 @@
           <td class="item-name">人数：</td>
           <td class="item-input">
             @if (is_null(old('numPeople')))
-              <input type="number" name="numPeople" value="1">
+              @if (isset($reservation))
+                <input type="number" name="numPeople" value="{{ $reservation->num_people }}">
+              @else
+                <input type="number" name="numPeople" value="1">
+              @endif
             @else
               <input type="number" name="numPeople" value="{{ old('numPeople') }}">
             @endif
           </td>
         </tr>
       </table>
+      @if (isset($reservation))
+      @else
+      @endif
       <input type="hidden" name="shopId" value="{{ $shop->id }}">
     </div>
     <div class="submit-button">
-      <button>予約する</button>
+
+      <button>
+        @if (isset($reservation))
+          予約修正
+        @else
+          予約する
+        @endif
+      </button>
     </div>
   </form>
 @endsection

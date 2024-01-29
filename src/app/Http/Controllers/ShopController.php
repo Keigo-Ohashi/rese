@@ -101,7 +101,7 @@ class ShopController extends Controller
 
     public function reserveComplete(): View
     {
-        return view('shop.reserved');
+        return view('reservation.completed');
     }
 
     public function myPage(): View
@@ -119,5 +119,17 @@ class ShopController extends Controller
         $reservationId = $request->reservationId;
         $this->shopService->deleteReservation($userId, $reservationId);
         return redirect('my-page');
+    }
+
+    public function showModifyReservation(string $reservationId): View
+    {
+        $userId  = Auth::id();
+        [$reservation, $shop, $image] = $this->shopService->getModifyReservationInfo($userId, $reservationId);
+
+        if (is_null($reservation)) {
+            return view('reservation.notFound');
+        }
+        $referrer = '/modify-reservation/' . $reservationId;
+        return view('shop.detail', compact('reservation', 'shop', 'image', 'referrer'));
     }
 }

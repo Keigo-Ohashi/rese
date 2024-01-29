@@ -27,4 +27,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/done', [ShopController::class, 'reserveComplete']);
     Route::get('/my-page', [ShopController::class, 'myPage']);
     Route::post('/delete-reservation', [ShopController::class, 'deleteReservation']);
+    Route::get('/modify-reservation/{reservationId}', [ShopController::class, 'showModifyReservation']);
 });

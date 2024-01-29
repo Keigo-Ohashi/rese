@@ -21,6 +21,7 @@ h2 {
 }
 
 .reservation {
+    display: block;
     background-color: #3560f6;
     padding: 2rem;
     border-radius: 10px;

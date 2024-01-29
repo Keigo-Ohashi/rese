@@ -118,7 +118,7 @@ class ShopController extends Controller
         $userId = Auth::id();
         $reservationId = $request->reservationId;
         $this->shopService->deleteReservation($userId, $reservationId);
-        return redirect('my-page');
+        return redirect('/reservation/deleted');
     }
 
     public function showModifyReservation(string $reservationId): View
@@ -131,5 +131,10 @@ class ShopController extends Controller
         }
         $referrer = '/modify-reservation/' . $reservationId;
         return view('shop.detail', compact('reservation', 'shop', 'image', 'referrer'));
+    }
+
+    public function reservationDeleted(): View
+    {
+        return view('reservation.deleted');
     }
 }

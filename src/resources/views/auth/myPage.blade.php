@@ -24,16 +24,17 @@
         <p>予約情報がありません</p>
       @endif
       @foreach ($reservations as $reservation)
-        <form action="delete-reservation" method="post" class="reservation">
-          @csrf
+        <a href="/modify-reservation/{{ $reservation->id }}" class="reservation">
           <div class="reservation-head">
             <div class="reservation-img">
               <img src="/image/myPage/clock.png" alt="">
             </div>
-            <div class="delete-button">
-              <button name="reservationId" value="{{ $reservation->id }}"> <img src="/image/myPage/delete.png"
-                  alt=""> </button>
-            </div>
+            <form action="delete-reservation" method="post" class="delete-button">
+              @csrf
+              <button name="reservationId" value="{{ $reservation->id }}">
+                <img src="/image/myPage/delete.png" alt="">
+              </button>
+            </form>
           </div>
           <table class="reservation-content">
             <tr>
@@ -53,7 +54,7 @@
               <td>{{ $reservation->num_people }}人</td>
             </tr>
           </table>
-        </form>
+        </a>
       @endforeach
 
     </div>

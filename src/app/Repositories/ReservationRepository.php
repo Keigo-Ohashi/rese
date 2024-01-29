@@ -37,4 +37,9 @@ class ReservationRepository
     {
         Reservation::where('id', $reservationId)->delete();
     }
+
+    public function find(string $reservationId): Reservation
+    {
+        return Reservation::find($reservationId);
+    }
 }

@@ -8,7 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
 use App\Services\ShopService;
-use App\Http\Requests\RegisterReservationRequest;
+use App\Http\Requests\ReservationRequest;
 
 class ShopController extends Controller
 {
@@ -88,7 +88,7 @@ class ShopController extends Controller
         return view('shop.detail', compact('shop', 'image',  'referrer'));
     }
 
-    public function reserve(RegisterReservationRequest $request): RedirectResponse
+    public function reserve(ReservationRequest $request): RedirectResponse
     {
         $userId = Auth::id();
         $shopId = $request->shopId;
@@ -101,7 +101,7 @@ class ShopController extends Controller
 
     public function reserveComplete(): View
     {
-        return view('shop.reserved');
+        return view('reservation.completed');
     }
 
     public function myPage(): View
@@ -119,5 +119,17 @@ class ShopController extends Controller
         $reservationId = $request->reservationId;
         $this->shopService->deleteReservation($userId, $reservationId);
         return redirect('my-page');
+    }
+
+    public function showModifyReservation(string $reservationId): View
+    {
+        $userId  = Auth::id();
+        [$reservation, $shop, $image] = $this->shopService->getModifyReservationInfo($userId, $reservationId);
+
+        if (is_null($reservation)) {
+            return view('reservation.notFound');
+        }
+        $referrer = '/modify-reservation/' . $reservationId;
+        return view('shop.detail', compact('reservation', 'shop', 'image', 'referrer'));
     }
 }

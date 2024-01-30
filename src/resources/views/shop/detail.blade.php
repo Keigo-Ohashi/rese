@@ -44,8 +44,7 @@
     </div>
   </div>
 
-  <form @if (isset($reservation)) action="/modify-reservation" @else  action="/reserve" @endif method="post"
-    class="reserve-form">
+  <form method="post" class="reserve-form">
 
     <div class="reserve-inputs">
       @csrf
@@ -122,19 +121,17 @@
         </tr>
       </table>
       @if (isset($reservation))
+        <input type="hidden" name="reservationId" value="{{ $reservation->id }}">
       @else
+        <input type="hidden" name="shopId" value="{{ $shop->id }}">
       @endif
-      <input type="hidden" name="shopId" value="{{ $shop->id }}">
     </div>
     <div class="submit-button">
-
-      <button>
-        @if (isset($reservation))
-          予約修正
-        @else
-          予約する
-        @endif
-      </button>
+      @if (isset($reservation))
+        <button formaction="/reservation/modify">予約修正</button>
+      @else
+        <button formaction="/reserve">予約する</button>
+      @endif
     </div>
   </form>
 @endsection

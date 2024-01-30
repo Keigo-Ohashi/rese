@@ -24,7 +24,7 @@
         <p>予約情報がありません</p>
       @endif
       @foreach ($reservations as $reservation)
-        <a href="/modify-reservation/{{ $reservation->id }}" class="reservation">
+        <a href="/reservation/modify/{{ $reservation->id }}" class="reservation">
           <div class="reservation-head">
             <div class="reservation-img">
               <img src="/image/myPage/clock.png" alt="">

@@ -24,9 +24,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/like', [ShopController::class, 'like']);
     Route::post('/unlike', [ShopController::class, 'unlike']);
     Route::post('/reserve', [ShopController::class, 'reserve']);
+    Route::get('/reserve/failed', [ShopController::class, 'reserveFailed']);
     Route::get('/done', [ShopController::class, 'reserveComplete']);
     Route::get('/my-page', [ShopController::class, 'myPage']);
     Route::post('/delete-reservation', [ShopController::class, 'deleteReservation']);
-    Route::get('/modify-reservation/{reservationId}', [ShopController::class, 'showModifyReservation']);
     Route::get('/reservation/deleted', [ShopController::class, 'reservationDeleted']);
+    Route::post('/reservation/modify', [ShopController::class, 'modifyReservation']);
+    Route::get('/reservation/modify/completed', [ShopController::class, 'reservationModifyCompleted']);
+    Route::get('/reservation/modify/failed', [ShopController::class, 'reservationModifyFailed']);
+    Route::get('/reservation/modify/{reservationId}', [ShopController::class, 'showModifyReservation']);
 });

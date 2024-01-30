@@ -25,6 +25,7 @@ class ReservationRepository
         return Reservation::where('user_id', $userId)->where('date_time', '>', Carbon::now())
             ->join('shops', 'reservations.shop_id', 'shops.id')
             ->select('reservations.*', 'shops.name as shop_name')
+            ->orderBy('reservations.date_time')
             ->get();
     }
 
@@ -33,13 +34,18 @@ class ReservationRepository
         return Reservation::where('user_id', $userId)->where('id', $reservationId)->count();
     }
 
-    public function delete(string $reservationId): void
+    public function delete(string $reservationId): int
     {
-        Reservation::where('id', $reservationId)->delete();
+        return Reservation::where('id', $reservationId)->delete();
     }
 
     public function find(string $reservationId): Reservation
     {
         return Reservation::find($reservationId);
+    }
+
+    public function modify(string $reservationId, string $dateTime, string $numPeople): int
+    {
+        return Reservation::find($reservationId)->update(['date_time' => $dateTime, 'num_people' => $numPeople]);
     }
 }

@@ -95,8 +95,15 @@ class ShopController extends Controller
         $date = $request->date;
         $time = $request->time;
         $numPeople = $request->numPeople;
+        if (is_null($shopId)) {
+            return redirect('/reserve/failed');
+        }
         $this->shopService->reserve($userId, $shopId, $date, $time, $numPeople);
         return redirect('done');
+    }
+    public function reserveFailed(): View
+    {
+        return view('reservation.failed');
     }
 
     public function reserveComplete(): View
@@ -136,5 +143,31 @@ class ShopController extends Controller
     public function reservationDeleted(): View
     {
         return view('reservation.deleted');
+    }
+
+    public function modifyReservation(ReservationRequest $request): RedirectResponse
+    {
+        $userId = Auth::id();
+        $reservationId = $request->reservationId;
+        $date = $request->date;
+        $time = $request->time;
+        $numPeople = $request->numPeople;
+        if (is_null($reservationId)) {
+            return redirect('/reservation/modify/failed');
+        }
+        if ($this->shopService->modifyReservation($userId, $reservationId, $date, $time, $numPeople)) {
+            return redirect('/reservation/modify/completed');
+        };
+        return redirect('/reservation/modify/failed');
+    }
+
+    public function reservationModifyCompleted(): View
+    {
+        return view('reservation.modify.completed');
+    }
+
+    public function reservationModifyFailed(): View
+    {
+        return view('reservation.modify.failed');
     }
 }

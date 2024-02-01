@@ -74,11 +74,6 @@ class ShopService
         return false;
     }
 
-    public function reserve(int $userId, string $shopId, string $date, string $time, string $numPeople): void
-    {
-        $this->reservationRepository->register($userId, $shopId, $date . ' ' . $time, $numPeople);
-    }
-
     public function getMyPageInfo(int $userId): array
     {
         $shops = $this->shopRepository->getLikeShop($userId);
@@ -89,42 +84,5 @@ class ShopService
         $reservations = $this->reservationRepository->getReservationList($userId);
 
         return [$shops, $images, $reservations];
-    }
-
-    public function deleteReservation(int $userId, string $reservationId): bool
-    {
-        if ($this->reservationRepository->count($userId, $reservationId) != 1) {
-            return false;
-        }
-        $this->reservationRepository->delete($reservationId);
-        return True;
-    }
-
-    public function getModifyReservationInfo(int $userId, string $reservationId): array
-    {
-        if ($this->reservationRepository->count($userId, $reservationId) != 1) {
-            return [null, null, null];
-        }
-        $reservation = $this->reservationRepository->find($reservationId);
-
-        $shop = $this->shopRepository->find($reservation->shop_id, $userId);
-        if (is_null($shop)) {
-            return [null, null, null];
-        }
-
-        $image = Storage::disk('s3')->url($shop->image, now()->addMinute());
-        return [$reservation, $shop, $image];
-    }
-
-    public function modifyReservation(int $userId, string $reservationId, string $date, string $time, string $numPeople): bool
-    {
-
-        if ($this->reservationRepository->count($userId, $reservationId) != 1) {
-            return false;
-        }
-        if ($this->reservationRepository->modify($reservationId, $date . ' ' . $time, $numPeople) != 1) {
-            return false;
-        }
-        return true;
     }
 }

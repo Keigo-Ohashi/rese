@@ -130,7 +130,7 @@
       @if (isset($reservation))
         <button formaction="/reservation/modify">予約修正</button>
       @else
-        <button formaction="/reserve">予約する</button>
+        <button formaction="/reservation">予約する</button>
       @endif
     </div>
   </form>

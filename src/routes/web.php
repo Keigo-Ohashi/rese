@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ShopController;
 
 /*
@@ -23,14 +25,16 @@ Route::get('/thanks', [RegisterController::class, 'showThanks']);
 Route::middleware('auth')->group(function () {
     Route::post('/like', [ShopController::class, 'like']);
     Route::post('/unlike', [ShopController::class, 'unlike']);
-    Route::post('/reserve', [ShopController::class, 'reserve']);
-    Route::get('/reserve/failed', [ShopController::class, 'reserveFailed']);
-    Route::get('/done', [ShopController::class, 'reserveComplete']);
     Route::get('/my-page', [ShopController::class, 'myPage']);
-    Route::post('/delete-reservation', [ShopController::class, 'deleteReservation']);
-    Route::get('/reservation/deleted', [ShopController::class, 'reservationDeleted']);
-    Route::post('/reservation/modify', [ShopController::class, 'modifyReservation']);
-    Route::get('/reservation/modify/completed', [ShopController::class, 'reservationModifyCompleted']);
-    Route::get('/reservation/modify/failed', [ShopController::class, 'reservationModifyFailed']);
-    Route::get('/reservation/modify/{reservationId}', [ShopController::class, 'showModifyReservation']);
+    Route::group(['prefix' => '/reservation'], function () {
+        Route::post('/', [ReservationController::class, 'reserve']);
+        Route::get('/completed', [ReservationController::class, 'reserveCompleted']);
+        Route::get('/failed', [ReservationController::class, 'reserveFailed']);
+        Route::post('/delete', [ReservationController::class, 'deleteReservation']);
+        Route::get('/delete/completed', [ReservationController::class, 'deleteReservationCompleted']);
+        Route::get('/modify', [ReservationController::class, 'showModifyReservationPage']);
+        Route::post('/modify', [ReservationController::class, 'modifyReservation']);
+        Route::get('/modify/completed', [ReservationController::class, 'reservationModifyCompleted']);
+        Route::get('/modify/failed', [ReservationController::class, 'reservationModifyFailed']);
+    });
 });

@@ -24,12 +24,12 @@
         <p>予約情報がありません</p>
       @endif
       @foreach ($reservations as $reservation)
-        <a href="/reservation/modify/{{ $reservation->id }}" class="reservation">
+        <a href="/reservation/modify?reservationId={{ $reservation->id }}" class="reservation">
           <div class="reservation-head">
             <div class="reservation-img">
               <img src="/image/myPage/clock.png" alt="">
             </div>
-            <form action="delete-reservation" method="post" class="delete-button">
+            <form action="/reservation/delete" method="post" class="delete-button">
               @csrf
               <button name="reservationId" value="{{ $reservation->id }}">
                 <img src="/image/myPage/delete.png" alt="">

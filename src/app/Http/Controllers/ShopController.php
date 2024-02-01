@@ -88,29 +88,6 @@ class ShopController extends Controller
         return view('shop.detail', compact('shop', 'image',  'referrer'));
     }
 
-    public function reserve(ReservationRequest $request): RedirectResponse
-    {
-        $userId = Auth::id();
-        $shopId = $request->shopId;
-        $date = $request->date;
-        $time = $request->time;
-        $numPeople = $request->numPeople;
-        if (is_null($shopId)) {
-            return redirect('/reserve/failed');
-        }
-        $this->shopService->reserve($userId, $shopId, $date, $time, $numPeople);
-        return redirect('done');
-    }
-    public function reserveFailed(): View
-    {
-        return view('reservation.failed');
-    }
-
-    public function reserveComplete(): View
-    {
-        return view('reservation.completed');
-    }
-
     public function myPage(): View
     {
         $userId = Auth::id();
@@ -118,56 +95,5 @@ class ShopController extends Controller
         session()->put('back', '/my-page');
         $referrer = '/my-page';
         return view('auth.myPage', compact('shops', 'images', 'reservations', 'referrer'));
-    }
-
-    public function deleteReservation(Request $request): RedirectResponse
-    {
-        $userId = Auth::id();
-        $reservationId = $request->reservationId;
-        $this->shopService->deleteReservation($userId, $reservationId);
-        return redirect('/reservation/deleted');
-    }
-
-    public function showModifyReservation(string $reservationId): View
-    {
-        $userId  = Auth::id();
-        [$reservation, $shop, $image] = $this->shopService->getModifyReservationInfo($userId, $reservationId);
-
-        if (is_null($reservation)) {
-            return view('reservation.notFound');
-        }
-        $referrer = '/modify-reservation/' . $reservationId;
-        return view('shop.detail', compact('reservation', 'shop', 'image', 'referrer'));
-    }
-
-    public function reservationDeleted(): View
-    {
-        return view('reservation.deleted');
-    }
-
-    public function modifyReservation(ReservationRequest $request): RedirectResponse
-    {
-        $userId = Auth::id();
-        $reservationId = $request->reservationId;
-        $date = $request->date;
-        $time = $request->time;
-        $numPeople = $request->numPeople;
-        if (is_null($reservationId)) {
-            return redirect('/reservation/modify/failed');
-        }
-        if ($this->shopService->modifyReservation($userId, $reservationId, $date, $time, $numPeople)) {
-            return redirect('/reservation/modify/completed');
-        };
-        return redirect('/reservation/modify/failed');
-    }
-
-    public function reservationModifyCompleted(): View
-    {
-        return view('reservation.modify.completed');
-    }
-
-    public function reservationModifyFailed(): View
-    {
-        return view('reservation.modify.failed');
     }
 }

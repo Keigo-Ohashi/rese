@@ -56,7 +56,7 @@
         @endif
       </h3>
 
-      <table>
+      <table class="input-table">
         @if ($errors->has('date'))
           <tr>
             <td></td>

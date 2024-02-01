@@ -84,3 +84,14 @@ h2 {
         width: 100%;
     }
 }
+
+@media all and (max-width: 768px) {
+    .my-page-content {
+        display: block;
+    }
+
+    .like-shops,
+    .reservations {
+        width: 100%;
+    }
+}

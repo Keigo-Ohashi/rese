@@ -74,11 +74,19 @@ main {
     margin-bottom: 2rem;
 }
 
+.input-title {
+    max-width: 100%;
+}
+
 .item-input input {
     box-sizing: border-box;
     padding: 0.5rem;
     border: none;
     border-radius: 6px;
+}
+
+.item-input input[type="number"] {
+    width: 5rem;
 }
 
 .error {
@@ -92,6 +100,7 @@ main {
 
 .item-name {
     color: #fff;
+    text-wrap: nowrap;
 }
 
 .submit-button button {
@@ -113,4 +122,15 @@ main {
     width: fit-content;
     padding: 0.5rem;
     border-radius: 6px;
+}
+
+@media all and (max-width: 768px) {
+    main {
+        display: block;
+    }
+
+    .shop-info,
+    .reserve-form {
+        width: 100%;
+    }
 }

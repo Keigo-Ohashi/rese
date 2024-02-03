@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Database\Seeders\AreaSeeder;
 use Database\Seeders\GenreSeeder;
 use Database\Seeders\ShopSeeder;
+use Database\Seeders\UserSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +14,7 @@ class DatabaseSeeder extends Seeder
         AreaSeeder::class,
         GenreSeeder::class,
         ShopSeeder::class,
+        UserSeeder::class,
     ];
 
     /**

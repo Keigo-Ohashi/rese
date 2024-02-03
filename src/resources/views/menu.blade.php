@@ -27,9 +27,11 @@
             <button>Logout</button>
           </form>
         </li>
-        <li class="link">
-          <a href="/my-page">Mypage</a>
-        </li>
+        @hasanyrole('user')
+          <li class="link">
+            <a href="/my-page">Mypage</a>
+          </li>
+        @endhasanyrole
       @else
         <li class="link">
           <a href="/register">Registration</a>

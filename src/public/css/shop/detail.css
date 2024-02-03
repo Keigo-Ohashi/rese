@@ -112,6 +112,12 @@ main {
     color: #fff;
 }
 
+.submit-button button:disabled {
+    cursor: not-allowed;
+    background-color: #3560f6;
+    color: #bbb;
+}
+
 .error {
     padding-bottom: 1rem;
 }

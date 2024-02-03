@@ -21,7 +21,7 @@
         <a href="{{ session('back') }}"><img src="{{ asset('image/shop/back_link.png') }}" alt=""></a>
       </div>
       <h2 class="shop-name">{{ $shop->name }}</h2>
-      @if (Auth::check())
+      @hasanyrole('user')
         <form method="post" class="shop-like">
           @csrf
           @if (is_null($shop->like_id))
@@ -35,7 +35,7 @@
           @endif
           <input type="hidden" name="referrer" value="{{ $referrer }}">
         </form>
-      @endif
+      @endhasanyrole
     </div>
     <div class="shop-image"><img src="{{ $image }}" alt=""></div>
     <div class="shop-tag">#{{ $shop->area_name }} #{{ $shop->genre_name }}</div>
@@ -128,9 +128,9 @@
     </div>
     <div class="submit-button">
       @if (isset($reservation))
-        <button formaction="/reservation/modify">予約修正</button>
+        <button formaction="/reservation/modify" @hasanyrole(['manager', 'admin']) disabled @endhasanyrole>予約修正</button>
       @else
-        <button formaction="/reservation">予約する</button>
+        <button formaction="/reservation" @hasanyrole(['manager', 'admin']) disabled @endhasanyrole>予約する</button>
       @endif
     </div>
   </form>

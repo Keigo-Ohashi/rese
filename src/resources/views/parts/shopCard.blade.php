@@ -6,7 +6,7 @@
       <div class="shop-tag">#{{ $shop->area_name }} #{{ $shop->genre_name }}</div>
       <div class="card--footer">
         <div class="detail">詳しく見る</div>
-        @if (Auth::check())
+        @hasanyrole('user')
           <form method="post" class="shop-like">
             @csrf
             @if (is_null($shop->like_id))
@@ -20,7 +20,7 @@
             @endif
             <input type="hidden" name="referrer" value="{{ $referrer }}">
           </form>
-        @endif
+        @endhasanyrole
       </div>
     </div>
   </a>

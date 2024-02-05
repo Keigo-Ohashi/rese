@@ -17,4 +17,9 @@ class AreaRepository
     {
         return Area::join('shops', 'areas.id', 'shops.area_id')->groupBy('areas.id')->select('areas.*')->get();
     }
+
+    public function find(string $id): ?Area
+    {
+        return Area::find($id);
+    }
 }

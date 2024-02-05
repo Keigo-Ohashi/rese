@@ -17,4 +17,9 @@ class GenreRepository
     {
         return Genre::join('shops', 'genres.id', 'shops.genre_id')->groupBy('genres.id')->select('genres.*')->get();
     }
+
+    public function find(string $id): Genre
+    {
+        return Genre::find($id);
+    }
 }

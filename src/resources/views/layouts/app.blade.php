@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="{{ asset('css/common/common.css') }}">
   @yield('css')
   @yield('title')
+  @yield('script')
 </head>
 
 <body>

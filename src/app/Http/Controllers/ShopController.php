@@ -8,7 +8,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
 use App\Services\ShopService;
-use App\Http\Requests\ReservationRequest;
 
 class ShopController extends Controller
 {

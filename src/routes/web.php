@@ -56,6 +56,13 @@ Route::middleware('auth')->group(function () {
                     Route::get("/completed", [ManagerController::class, "registerShopCompleted"]);
                     Route::get("/failed", [ManagerController::class, "registerShopFailed"]);
                 });
+                Route::prefix("/modify")->group(function () {
+                    Route::get("/", [ManagerController::class, "modifyShopInfoForm"]);
+                    Route::post("/", [ManagerController::class, "modifyShopInfo"]);
+                    Route::get("/completed", [ManagerController::class, "modifyShopInfoCompleted"]);
+                    Route::get("/failed", [ManagerController::class, "modifyShopInfoFailed"]);
+                });
+                Route::get("/reservations", [ManagerController::class, "checkReservations"]);
             });
         });
     });

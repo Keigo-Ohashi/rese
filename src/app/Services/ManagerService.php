@@ -37,11 +37,6 @@ class ManagerService
         return $this->getShopInfoOptions();
     }
 
-    public function getShopInfoModifyForm()
-    {
-        [$areas, $genres] = $this->getShopInfoOptions();
-    }
-
     private function getShopInfoOptions(): array
     {
         $areas = $this->areaRepository->getAll();
@@ -49,7 +44,7 @@ class ManagerService
         return [$areas, $genres];
     }
 
-    public function registerShopInfo(string $name, string $areaId, string $genreId, string $detail, UploadedFile $image): bool
+    public function registerShopInfo(string $name, string $areaId, string $genreId, string $detail, string $imagePath): bool
     {
         if (is_null($this->areaRepository->find($areaId))) {
             return false;
@@ -59,9 +54,49 @@ class ManagerService
             return false;
         }
 
-        $imageName = Storage::disk('s3')->put('image', $image, 'public');
+        $image = new UploadedFile(storage_path("app/public/" . $imagePath), basename($imagePath));
+        $imageName = Storage::disk("s3")->put("image", $image, "public");
 
         $this->shopRepository->register($name, $areaId, $genreId, $detail, $imageName);
+
+        return true;
+    }
+
+    public function getShopInfoModifyForm(string $shopId): array
+    {
+        $shop = $this->shopRepository->find($shopId, null);
+        if (is_null($shop)) {
+            return [null, null, null, null];
+        }
+
+        $image = Storage::disk('s3')->url($shop->image, now()->addMinute());
+        [$areas, $genres] = $this->getShopInfoOptions();
+
+        return [$shop, $image, $areas, $genres];
+    }
+
+    public function modifyShopInfo(string $id, string $name, string $areaId, string $genreId, string $detail, string $imagePath): bool
+    {
+        $shop = $this->shopRepository->find($id, null);
+        if (is_null($shop)) {
+            return false;
+        }
+
+        if (is_null($this->areaRepository->find($areaId))) {
+            return false;
+        }
+
+        if (is_null($this->genreRepository->find($genreId))) {
+            return false;
+        }
+
+        if ($imagePath != $shop->image) {
+            Storage::disk("s3")->delete($shop->image);
+            $image = new UploadedFile(storage_path("app/public/" . $imagePath), basename($imagePath));
+            $imagePath = Storage::disk("s3")->put("image", $image, "public");
+        }
+
+        $this->shopRepository->modify($id, $name, $areaId, $genreId, $detail, $imagePath);
 
         return true;
     }

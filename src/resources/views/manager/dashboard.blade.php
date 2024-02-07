@@ -66,7 +66,7 @@
         <td>{{ $shop->area_name }}</td>
         <td>{{ $shop->genre_name }}</td>
         <td>
-          <button type="button" onclick="location.href='/manager/shop/{{ $shop->id }}/modify'">情報修正</button>
+          <button type="button" onclick="location.href='/manager/shop/modify?shopId={{ $shop->id }}'">情報修正</button>
           <button type="button"
             onclick="location.href='/manager/shop/{{ $shop->id }}/confirm-reservation'">予約確認</button>
         </td>

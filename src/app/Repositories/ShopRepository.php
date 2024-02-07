@@ -68,4 +68,15 @@ class ShopRepository
             'image' => $image,
         ]);
     }
+
+    public function modify(string $id, string $name, string $areaId, string $genreId, string $detail, bool|string $imagePath): void
+    {
+        Shop::find($id)->update([
+            "name" => $name,
+            "area_id" => $areaId,
+            "genre_id" => $genreId,
+            "detail" => $detail,
+            "image" => $imagePath
+        ]);
+    }
 }

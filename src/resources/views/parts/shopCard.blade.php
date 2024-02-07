@@ -1,5 +1,5 @@
 <div class="card">
-  <a href="/detail/{{ $shop->id }}">
+  <a href="/detail?shopId={{ $shop->id }}">
     <div class="shop-image"><img src="{{ $images[$shop->id] }}" alt=""></div>
     <div class="card--description">
       <h2 class="shop-name">{{ $shop->name }}</h2>

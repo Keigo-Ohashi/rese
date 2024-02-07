@@ -71,13 +71,9 @@ class ShopController extends Controller
         return redirect($request->referrer);
     }
 
-    public function detail(string $shopId): View
+    public function detail(Request $request): View
     {
-
-        $areaId = session('areaId');
-        $genreId = session('genreId');
-        $shopName = session('shopName');
-
+        $shopId = $request->shopId;
         $userId = Auth::id();
         [$shop, $image] = $this->shopService->getShopInfo($shopId, $userId);
         if (is_null($shop)) {

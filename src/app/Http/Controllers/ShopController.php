@@ -55,21 +55,7 @@ class ShopController extends Controller
         return view('shop.list', compact('shops', 'areas', 'genres', 'images', 'referrer'));
     }
 
-    public function like(Request $request): RedirectResponse
-    {
-        $userId = Auth::id();
-        $shopId = $request->shopId;
-        $this->shopService->likeShop($userId, $shopId);
-        return redirect($request->referrer);
-    }
 
-    public function unlike(Request $request): RedirectResponse
-    {
-        $userId = Auth::id();
-        $shopId = $request->shopId;
-        $this->shopService->unlikeShop($userId, $shopId);
-        return redirect($request->referrer);
-    }
 
     public function detail(Request $request): View
     {
@@ -83,12 +69,5 @@ class ShopController extends Controller
         return view('shop.detail', compact('shop', 'image',  'referrer'));
     }
 
-    public function myPage(): View
-    {
-        $userId = Auth::id();
-        [$shops, $images, $reservations] = $this->shopService->getMyPageInfo($userId);
-        session()->put('back', '/my-page');
-        $referrer = '/my-page';
-        return view('auth.myPage', compact('shops', 'images', 'reservations', 'referrer'));
-    }
+
 }

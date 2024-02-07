@@ -5,7 +5,6 @@ namespace App\Repositories;
 use Illuminate\Database\Eloquent\Collection;
 use Carbon\Carbon;
 
-use App\Models\Shop;
 use App\Models\Reservation;
 
 class ReservationRepository
@@ -47,5 +46,26 @@ class ReservationRepository
     public function modify(string $reservationId, string $dateTime, string $numPeople): int
     {
         return Reservation::find($reservationId)->update(['date_time' => $dateTime, 'num_people' => $numPeople]);
+    }
+
+    public function getReservationListOfShop(string $shopId): array
+    {
+        $reservationsToday =
+            Reservation::where("shop_id", $shopId)
+            ->whereDate("date_time",  Carbon::today())
+            ->join('users', 'reservations.user_id', 'users.id')
+            ->select('reservations.*', 'users.name as user_name')
+            ->orderBy('reservations.date_time')
+            ->get();
+
+        $reservationsAfterToday =
+            Reservation::where("shop_id", $shopId)
+            ->where("date_time", ">=", Carbon::tomorrow())
+            ->join('users', 'reservations.user_id', 'users.id')
+            ->select('reservations.*', 'users.name as user_name')
+            ->orderBy('reservations.date_time')
+            ->get();
+
+        return [$reservationsToday, $reservationsAfterToday];
     }
 }

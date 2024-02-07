@@ -68,7 +68,7 @@
         <td>
           <button type="button" onclick="location.href='/manager/shop/modify?shopId={{ $shop->id }}'">情報修正</button>
           <button type="button"
-            onclick="location.href='/manager/shop/{{ $shop->id }}/confirm-reservation'">予約確認</button>
+            onclick="location.href='/manager/shop/reservation?shopId={{ $shop->id }}'">予約確認</button>
         </td>
       </tr>
     @endforeach

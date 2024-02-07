@@ -7,19 +7,18 @@ use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 
 use App\Services\ShopService;
-use App\Services\ManagerService;
+use App\Services\ReservationService;
 use App\Http\Requests\ShopInfoRequest;
-use Illuminate\Support\Facades\Storage;
 
 class ManagerController extends Controller
 {
     private $shopService;
-    private $managerService;
+    private $reservationService;
 
-    public function __construct(ShopService $shopService, ManagerService $managerService)
+    public function __construct(ShopService $shopService, ReservationService $reservationService)
     {
         $this->shopService = $shopService;
-        $this->managerService = $managerService;
+        $this->reservationService = $reservationService;
     }
 
     public function dashBoard(): View
@@ -43,7 +42,7 @@ class ManagerController extends Controller
 
     public function registerShopInfoForm(): View
     {
-        [$areas, $genres] = $this->managerService->getShopInfoRegisterForm();
+        [$areas, $genres] = $this->shopService->getShopInfoRegisterForm();
         return view("manager.shopInfo", compact("areas", "genres"));
     }
 
@@ -55,7 +54,7 @@ class ManagerController extends Controller
         $detail = $request->detail;
         $imagePath = session("image_path");
 
-        if ($this->managerService->registerShopInfo($name, $areaId, $genreId, $detail, $imagePath)) {
+        if ($this->shopService->registerShopInfo($name, $areaId, $genreId, $detail, $imagePath)) {
             return redirect('/manager/shop/register/completed');
         }
         return redirect('/manager/shop/register/failed');
@@ -73,7 +72,7 @@ class ManagerController extends Controller
 
     public function modifyShopInfoForm(Request $request): View
     {
-        [$shop, $image, $areas, $genres] = $this->managerService->getShopInfoModifyForm($request->shopId);
+        [$shop, $image, $areas, $genres] = $this->shopService->getShopInfoModifyForm($request->shopId);
         if (is_null($shop)) {
             return view("manager.modify.notFound");
         }
@@ -87,8 +86,11 @@ class ManagerController extends Controller
         $areaId = $request->areaId;
         $genreId = $request->genreId;
         $detail = $request->detail;
-        $imagePath = $request->imagePath;
-        if ($this->managerService->modifyShopInfo($id, $name, $areaId, $genreId, $detail, $imagePath)) {
+        $imagePath = session("imagePath");
+        if (is_null($imagePath)) {
+            $imagePath = $request->imagePath;
+        }
+        if ($this->shopService->modifyShopInfo($id, $name, $areaId, $genreId, $detail, $imagePath)) {
             return redirect('/manager/shop/modify/completed');
         }
         return redirect('/manager/shop/modify/failed');
@@ -104,7 +106,9 @@ class ManagerController extends Controller
         return view("manager.modify.failed");
     }
 
-    public function checkReservations(Request $request): View
+    public function reservationList(Request $request): View
     {
+        [$shop, $reservationsToday, $reservationsAfterToday] = $this->reservationService->getReservationList($request->shopId);
+        return view("manager.reservation", compact("shop", "reservationsToday", "reservationsAfterToday"));
     }
 }

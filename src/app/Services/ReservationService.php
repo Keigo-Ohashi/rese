@@ -61,4 +61,17 @@ class ReservationService
         }
         return true;
     }
+
+    public function getReservationList(string $shopId): array
+    {
+        $shop = $this->shopRepository->find($shopId, null);
+
+        if (is_null($shop)) {
+            return [null, null];
+        }
+
+        [$reservationsToday, $reservationsAfterToday] = $this->reservationRepository->getReservationListOfShop($shopId);
+
+        return [$shop, $reservationsToday, $reservationsAfterToday];
+    }
 }

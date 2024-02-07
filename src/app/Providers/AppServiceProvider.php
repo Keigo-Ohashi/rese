@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-use App\Services\ManagerService;
+use App\Services\UserService;
 use App\Services\ShopService;
 use App\Services\ReservationService;
 
@@ -24,8 +24,8 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         // Service
-        // wired(ManagerService)
-        $this->app->singleton(ManagerService::class, ManagerService::class);
+        // wired(UserService)
+        $this->app->singleton(UserService::class, UserService::class);
 
         // wired(ShopService)
         $this->app->singleton(ShopService::class, ShopService::class);

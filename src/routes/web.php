@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ManagerController;
 
@@ -27,9 +28,9 @@ Route::get('/detail', [ShopController::class, 'detail']);
 Route::get('/thanks', [RegisterController::class, 'showThanks']);
 Route::middleware('auth')->group(function () {
     Route::middleware("role:user")->group(function () {
-        Route::post('/like', [ShopController::class, 'like']);
-        Route::post('/unlike', [ShopController::class, 'unlike']);
-        Route::get('/my-page', [ShopController::class, 'myPage']);
+        Route::post('/like', [UserController::class, 'like']);
+        Route::post('/unlike', [UserController::class, 'unlike']);
+        Route::get('/my-page', [UserController::class, 'myPage']);
         Route::group(['prefix' => '/reservation'], function () {
             Route::post('/', [ReservationController::class, 'reserve']);
             Route::get('/completed', [ReservationController::class, 'reserveCompleted']);
@@ -62,7 +63,7 @@ Route::middleware('auth')->group(function () {
                     Route::get("/completed", [ManagerController::class, "modifyShopInfoCompleted"]);
                     Route::get("/failed", [ManagerController::class, "modifyShopInfoFailed"]);
                 });
-                Route::get("/reservations", [ManagerController::class, "checkReservations"]);
+                Route::get("/reservation", [ManagerController::class, "reservationList"]);
             });
         });
     });

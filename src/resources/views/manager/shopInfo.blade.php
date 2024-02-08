@@ -86,8 +86,6 @@
                   <option value="{{ $area->id }}">{{ $area->name }}
                   </option>
                 @endif
-                <option value="{{ $area->id }}">{{ $area->name }}
-                </option>
               @endif
             @endforeach
           </select>
@@ -113,8 +111,6 @@
                   <option value="{{ $genre->id }}">{{ $genre->name }}
                   </option>
                 @endif
-                <option value="{{ $genre->id }}">{{ $genre->name }}
-                </option>
               @endif
             @endforeach
           </select>

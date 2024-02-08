@@ -14,6 +14,7 @@ class Reservation extends Model
         'shop_id',
         'date_time',
         'num_people',
+        'is_came',
     ];
 
     protected $dates = ['date_time'];

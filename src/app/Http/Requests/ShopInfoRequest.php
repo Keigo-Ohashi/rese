@@ -50,6 +50,7 @@ class ShopInfoRequest extends FormRequest
                 if (in_array($imageExtension, ["jpeg", "jpg", "png"])) {
                     $imagePath =  $image->store('temp', 'public');
                     session()->flash("imagePath", $imagePath);
+                    $this->merge(["imagePath" => $imagePath]);
                     $imagePath = Storage::disk('public')->url($imagePath, now()->addMinute());
                     session()->flash('image', $imagePath);
                 } else {

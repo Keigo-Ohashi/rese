@@ -74,4 +74,9 @@ class ReservationService
 
         return [$shop, $reservationsToday, $reservationsAfterToday];
     }
+
+    public function userCame(string $reservationId): void
+    {
+        $this->reservationRepository->userCame($reservationId);
+    }
 }

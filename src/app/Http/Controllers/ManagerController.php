@@ -52,7 +52,7 @@ class ManagerController extends Controller
         $areaId = $request->areaId;
         $genreId = $request->genreId;
         $detail = $request->detail;
-        $imagePath = session("image_path");
+        $imagePath = $request->imagePath;
 
         if ($this->shopService->registerShopInfo($name, $areaId, $genreId, $detail, $imagePath)) {
             return redirect('/manager/shop/register/completed');
@@ -86,10 +86,7 @@ class ManagerController extends Controller
         $areaId = $request->areaId;
         $genreId = $request->genreId;
         $detail = $request->detail;
-        $imagePath = session("imagePath");
-        if (is_null($imagePath)) {
-            $imagePath = $request->imagePath;
-        }
+        $imagePath = $request->imagePath;
         if ($this->shopService->modifyShopInfo($id, $name, $areaId, $genreId, $detail, $imagePath)) {
             return redirect('/manager/shop/modify/completed');
         }
@@ -108,7 +105,16 @@ class ManagerController extends Controller
 
     public function reservationList(Request $request): View
     {
-        [$shop, $reservationsToday, $reservationsAfterToday] = $this->reservationService->getReservationList($request->shopId);
-        return view("manager.reservation", compact("shop", "reservationsToday", "reservationsAfterToday"));
+        $shopId = $request->shopId;
+        [$shop, $reservationsToday, $reservationsAfterToday] = $this->reservationService->getReservationList($shopId);
+        return view("manager.reservation", compact("shop", "reservationsToday", "reservationsAfterToday", "shopId"));
+    }
+
+    public function userCame(Request $request): RedirectResponse
+    {
+        $shopId = $request->shopId;
+        $reservationId = $request->reservationId;
+        $this->reservationService->userCame($reservationId);
+        return redirect("/manager/shop/reservation?shopId=" . $shopId);
     }
 }

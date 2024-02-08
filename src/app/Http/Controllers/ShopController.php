@@ -68,6 +68,4 @@ class ShopController extends Controller
         $referrer = '/detail/' . $shopId;
         return view('shop.detail', compact('shop', 'image',  'referrer'));
     }
-
-
 }

@@ -63,7 +63,10 @@ Route::middleware('auth')->group(function () {
                     Route::get("/completed", [ManagerController::class, "modifyShopInfoCompleted"]);
                     Route::get("/failed", [ManagerController::class, "modifyShopInfoFailed"]);
                 });
-                Route::get("/reservation", [ManagerController::class, "reservationList"]);
+                Route::prefix("/reservation")->group(function () {
+                    Route::get("/", [ManagerController::class, "reservationList"]);
+                    Route::post("/came", [ManagerController::class, "userCame"]);
+                });
             });
         });
     });

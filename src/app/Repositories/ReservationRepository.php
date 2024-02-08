@@ -68,4 +68,9 @@ class ReservationRepository
 
         return [$reservationsToday, $reservationsAfterToday];
     }
+
+    public function userCame($reservationId): void
+    {
+        Reservation::find($reservationId)->update(["is_came" => 1]);
+    }
 }

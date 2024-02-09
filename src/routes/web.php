@@ -71,3 +71,15 @@ Route::middleware('auth')->group(function () {
         });
     });
 });
+
+Route::middleware('auth')->group(function () {
+    Route::middleware("role:admin")->group(function () {
+        Route::prefix("/admin")->group(function () {
+            Route::get("/", [AdminController::class, "dashboard"]);
+            Route::prefix("/register")->group(function () {
+                Route::post("/", [AdminController::class, "registerManager"]);
+                Route::get("/completed", [AdminController::class, "registerManagerCompleted"]);
+            });
+        });
+    });
+});

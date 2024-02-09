@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+use App\Services\AdminService;
 use App\Services\UserService;
 use App\Services\ShopService;
 use App\Services\ReservationService;
@@ -13,6 +14,7 @@ use App\Repositories\GenreRepository;
 use App\Repositories\LikeRepository;
 use App\Repositories\ShopRepository;
 use App\Repositories\ReservationRepository;
+use App\Repositories\UserRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +26,9 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         // Service
+        // wired(AdminService)
+        $this->app->singleton(AdminService::class, AdminService::class);
+
         // wired(UserService)
         $this->app->singleton(UserService::class, UserService::class);
 
@@ -48,6 +53,9 @@ class AppServiceProvider extends ServiceProvider
 
         // wired(ReservationRepository)
         $this->app->singleton(ReservationRepository::class, ReservationRepository::class);
+
+        // wired(UserRepository)
+        $this->app->singleton(UserRepository::class, UserRepository::class);
     }
 
     /**

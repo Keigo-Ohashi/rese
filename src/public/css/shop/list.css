@@ -45,6 +45,7 @@
 }
 .submit-button button {
     line-height: 0;
+    background-color: transparent;
 }
 
 .cards {

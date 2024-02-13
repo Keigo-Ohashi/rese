@@ -14,3 +14,7 @@
     font-size: 2rem;
     border: none;
 }
+
+.link button {
+    background-color: transparent;
+}

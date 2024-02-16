@@ -1,5 +1,5 @@
 body {
-    padding: 50px 100px;
+    padding: 50px 50px;
     caret-color: transparent;
 }
 
@@ -11,12 +11,17 @@ a {
 header {
     display: flex;
     justify-content: space-between;
+}
+
+.header-left,
+.header-right {
     margin-bottom: 50px;
 }
 
 .header-left {
     display: flex;
     align-items: center;
+    margin-right: 2rem;
 }
 
 .menu-button {
@@ -48,4 +53,11 @@ input:focus {
 button {
     cursor: pointer;
     padding: 0;
+}
+
+@media all and (max-width: 768px) {
+    body {
+        padding: 50px 10%;
+        caret-color: transparent;
+    }
 }

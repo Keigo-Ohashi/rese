@@ -1,4 +1,4 @@
-src/vendor/
+
 src/node_modules/
 src/npm-debug.log
 src/yarn-error.log
@@ -22,4 +22,5 @@ src/Homestead.json
 src/.vagrant
 src/.phpunit.result.cache
 
-docker/*
+docker/mysql/data/*
+docker/minio/*

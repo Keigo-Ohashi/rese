@@ -24,36 +24,44 @@
         <p>予約情報がありません</p>
       @endif
       @foreach ($reservations as $reservation)
-        <form action="delete-reservation" method="post" class="reservation">
-          @csrf
-          <div class="reservation-head">
-            <div class="reservation-img">
-              <img src="/image/myPage/clock.png" alt="">
-            </div>
-            <div class="delete-button">
-              <button name="reservationId" value="{{ $reservation->id }}"> <img src="/image/myPage/delete.png"
-                  alt=""> </button>
-            </div>
+        @if ($reservation->is_came == 0)
+          <a href="/reservation/modify?reservationId={{ $reservation->id }}
+          " class="reservation">
+          @else
+            <a href="" class="reservation">
+        @endif
+        <div class="reservation-head">
+          <div class="reservation-img">
+            <img src="/image/myPage/clock.png" alt="">
           </div>
-          <table class="reservation-content">
-            <tr>
-              <td>Shop</td>
-              <td>{{ $reservation->shop_name }}</td>
-            </tr>
-            <tr>
-              <td>Date</td>
-              <td>{{ $reservation->date }}</td>
-            </tr>
-            <tr>
-              <td>Time</td>
-              <td>{{ $reservation->time }}</td>
-            </tr>
-            <tr>
-              <td>Number</td>
-              <td>{{ $reservation->num_people }}人</td>
-            </tr>
-          </table>
-        </form>
+          @if ($reservation->is_came == 0)
+            <form action="/reservation/delete" method="post" class="delete-button">
+              @csrf
+              <button name="reservationId" value="{{ $reservation->id }}">
+                <img src="/image/myPage/delete.png" alt="">
+              </button>
+            </form>
+          @endif
+        </div>
+        <table class="reservation-content">
+          <tr>
+            <td>Shop</td>
+            <td>{{ $reservation->shop_name }}</td>
+          </tr>
+          <tr>
+            <td>Date</td>
+            <td>{{ $reservation->date }}</td>
+          </tr>
+          <tr>
+            <td>Time</td>
+            <td>{{ $reservation->time }}</td>
+          </tr>
+          <tr>
+            <td>Number</td>
+            <td>{{ $reservation->num_people }}人</td>
+          </tr>
+        </table>
+        </a>
       @endforeach
 
     </div>

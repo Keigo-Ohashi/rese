@@ -1,0 +1,17 @@
+.title,
+.submit-button,
+.register-contents td {
+    padding: 0.5rem;
+}
+
+.title {
+    margin-bottom: 1rem;
+}
+
+.register-contents td {
+    vertical-align: middle;
+}
+
+.error {
+    color: #f00;
+}

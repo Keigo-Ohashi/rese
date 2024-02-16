@@ -5,7 +5,7 @@
 @endsection
 
 @section('title')
-  <title>会員登録</title>
+  <title>ログイン</title>
 @endsection
 
 @section('header-left')

@@ -8,7 +8,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
 use App\Services\ShopService;
-use App\Http\Requests\RegisterReservationRequest;
 
 class ShopController extends Controller
 {
@@ -56,29 +55,11 @@ class ShopController extends Controller
         return view('shop.list', compact('shops', 'areas', 'genres', 'images', 'referrer'));
     }
 
-    public function like(Request $request): RedirectResponse
+
+
+    public function detail(Request $request): View
     {
-        $userId = Auth::id();
         $shopId = $request->shopId;
-        $this->shopService->likeShop($userId, $shopId);
-        return redirect($request->referrer);
-    }
-
-    public function unlike(Request $request): RedirectResponse
-    {
-        $userId = Auth::id();
-        $shopId = $request->shopId;
-        $this->shopService->unlikeShop($userId, $shopId);
-        return redirect($request->referrer);
-    }
-
-    public function detail(string $shopId): View
-    {
-
-        $areaId = session('areaId');
-        $genreId = session('genreId');
-        $shopName = session('shopName');
-
         $userId = Auth::id();
         [$shop, $image] = $this->shopService->getShopInfo($shopId, $userId);
         if (is_null($shop)) {
@@ -86,38 +67,5 @@ class ShopController extends Controller
         }
         $referrer = '/detail/' . $shopId;
         return view('shop.detail', compact('shop', 'image',  'referrer'));
-    }
-
-    public function reserve(RegisterReservationRequest $request): RedirectResponse
-    {
-        $userId = Auth::id();
-        $shopId = $request->shopId;
-        $date = $request->date;
-        $time = $request->time;
-        $numPeople = $request->numPeople;
-        $this->shopService->reserve($userId, $shopId, $date, $time, $numPeople);
-        return redirect('done');
-    }
-
-    public function reserveComplete(): View
-    {
-        return view('shop.reserved');
-    }
-
-    public function myPage(): View
-    {
-        $userId = Auth::id();
-        [$shops, $images, $reservations] = $this->shopService->getMyPageInfo($userId);
-        session()->put('back', '/my-page');
-        $referrer = '/my-page';
-        return view('auth.myPage', compact('shops', 'images', 'reservations', 'referrer'));
-    }
-
-    public function deleteReservation(Request $request): RedirectResponse
-    {
-        $userId = Auth::id();
-        $reservationId = $request->reservationId;
-        $this->shopService->deleteReservation($userId, $reservationId);
-        return redirect('my-page');
     }
 }

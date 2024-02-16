@@ -21,6 +21,7 @@ h2 {
 }
 
 .reservation {
+    display: block;
     background-color: #3560f6;
     padding: 2rem;
     border-radius: 10px;
@@ -80,6 +81,17 @@ h2 {
 
     .cards,
     .card {
+        width: 100%;
+    }
+}
+
+@media all and (max-width: 768px) {
+    .my-page-content {
+        display: block;
+    }
+
+    .like-shops,
+    .reservations {
         width: 100%;
     }
 }

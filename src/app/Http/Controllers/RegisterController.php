@@ -13,6 +13,7 @@ use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Fortify\Contracts\RegisterResponse;
 use Laravel\Fortify\Contracts\RegisterViewResponse;
 use Laravel\Fortify\Fortify;
+use Spatie\Permission\Models\Role;
 
 class RegisterController extends Controller
 {
@@ -62,7 +63,9 @@ class RegisterController extends Controller
             ]);
         }
 
-        event(new Registered($user = $creator->create($request->all())));
+        $userRole = Role::where("name", "user")->first();
+
+        event(new Registered($creator->create($request->all())->assignRole($userRole)));
 
         return redirect('thanks');
     }

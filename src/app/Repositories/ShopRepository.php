@@ -57,4 +57,26 @@ class ShopRepository
             ->orderBy('shops.id')
             ->get();
     }
+
+    public function register(string $name, string $areaId, string $genreId, string $detail, string $image): void
+    {
+        Shop::create([
+            'name' => $name,
+            'area_id' => $areaId,
+            'genre_id' => $genreId,
+            'detail' => $detail,
+            'image' => $image,
+        ]);
+    }
+
+    public function modify(string $id, string $name, string $areaId, string $genreId, string $detail, bool|string $imagePath): void
+    {
+        Shop::find($id)->update([
+            "name" => $name,
+            "area_id" => $areaId,
+            "genre_id" => $genreId,
+            "detail" => $detail,
+            "image" => $imagePath
+        ]);
+    }
 }

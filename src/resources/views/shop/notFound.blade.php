@@ -9,5 +9,5 @@
 @endsection
 
 @section('link')
-  <a href="{{ $back }}">戻る</a>
+  <a href="{{ session('back') }}">戻る</a>
 @endsection

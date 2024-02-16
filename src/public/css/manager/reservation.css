@@ -1,0 +1,18 @@
+.message {
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.reservations,
+.reservations th,
+.reservations td {
+    border: 1px solid #000;
+    border-collapse: separate;
+    border-spacing: 2px;
+}
+
+.reservations th,
+.reservations td {
+    padding: 0.5rem;
+    text-align: center;
+}

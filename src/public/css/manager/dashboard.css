@@ -1,0 +1,17 @@
+.search-form {
+    margin-bottom: 1rem;
+}
+
+.shop-list,
+.shop-list th,
+.shop-list td {
+    border: 1px solid #000;
+    border-collapse: separate;
+    border-spacing: 2px;
+}
+
+.search-options td,
+.shop-list th,
+.shop-list td {
+    padding: 0.5rem;
+}
